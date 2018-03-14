@@ -1,22 +1,62 @@
 <?php
+//Session checking
 	session_start();
 	require_once '../config/connect.php';
 	if(!isset($_SESSION['email']) & empty($_SESSION['email'])){
 		header('location: login.php');
 	}
+	//post the product details to DB once the submit button is pressed 
 	if(isset($_POST) & !empty($_POST)){
 		$prodname = mysqli_real_escape_string($connection, $_POST['productname']);
 		$description = mysqli_real_escape_string($connection, $_POST['productdescription']);
 		$category = mysqli_real_escape_string($connection, $_POST['productcategory']);
 		$price = mysqli_real_escape_string($connection, $_POST['productprice']);
-		$sql = "INSERT INTO products (name, description, catid, price) VALUES ('$prodname', '$description', '$category', '$price')";
-		$res = mysqli_query($connection, $sql);
-		if($res){
-			$smsg = "Category Added";
+		//If the files are set then file validation is done like extension check and max size 
+		if(isset($_FILES) & !empty($_FILES)){
+			$name = $_FILES['productimage']['name'];
+			$size = $_FILES['productimage']['size'];
+			$type = $_FILES['productimage']['type'];
+			$tmp_name = $_FILES['productimage']['tmp_name'];
+
+			$max_size = 10000000;
+			//extension type is extracted from the name string by spotting the . and retreiving string from next pointer i.e jpg or jpeg
+			$extension = substr($name, strpos($name, '.') + 1);
+            //Checking for the file name 
+			if(isset($name) && !empty($name)){
+				if(($extension == "jpg" || $extension == "jpeg") && $type == "image/jpeg" && $size<=$max_size){
+					$location = "uploads/";
+					if(move_uploaded_file($tmp_name, $location.$name)){
+						//$smsg = "Uploaded Successfully";
+						$sql = "INSERT INTO products (name, description, catid, price, thumb) VALUES ('$prodname', '$description', '$category', '$price', '$location$name')";
+						$res = mysqli_query($connection, $sql);
+						if($res){
+							//echo "Product Created";
+							header('location: products.php');
+						}else{
+							$fmsg = "Failed to Create Product";
+						}
+					}else{
+						$fmsg = "Failed to Upload File";
+					}
+				}else{
+					$fmsg = "Only JPG files are allowed and should be less that 1MB";
+				}
+			}else{
+				$fmsg = "Please Select a File";
+			}
 		}else{
-			$fmsg = "Failed Add Category";
-		}
+            //if no file upload is done then only the name descrption category price are inserted
+			$sql = "INSERT INTO products (name, description, catid, price) VALUES ('$prodname', '$description', '$category', '$price')";
+			$res = mysqli_query($connection, $sql);
+			if($res){
+				//if inserestion is done then page is reverted to products.php 
+				header('location: products.php');
+			}else{
+				$fmsg =  "Failed to Create Product";
+			}
 	}
+}
+
 ?>
 <?php include 'inc/header.php'; ?>
 <?php include 'inc/nav.php'; ?>
@@ -41,6 +81,7 @@
 			    <select class="form-control" id="productcategory" name="productcategory">
 				  <option value="">---SELECT CATEGORY---</option>
 				  <?php 	
+				  //we retreive the categories from the DB to display in dropdown
 					$sql = "SELECT * FROM category";
 					$res = mysqli_query($connection, $sql); 
 					while ($r = mysqli_fetch_assoc($res)) {
