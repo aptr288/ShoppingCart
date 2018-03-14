@@ -20,12 +20,12 @@ include 'inc/header.php'; ?>
 
 							<?php 
 								$sql = "SELECT * FROM products";
-								/*if(isset($_GET['id']) & !empty($_GET['id'])){
+								//here we get the category Id from the navgation URL and display only books related to category selcted 
+								if(isset($_GET['id']) & !empty($_GET['id']))
+								{
 									$id = $_GET['id'];
 									$sql .= " WHERE catid=$id";
-								}*/
-								
-
+								}
 								$res = mysqli_query($connection, $sql);
 								//while loop is used to iterate and display all items
 								while($r = mysqli_fetch_assoc($res)){

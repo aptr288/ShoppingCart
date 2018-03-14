@@ -8,10 +8,15 @@
 						<a href="#">Shop</a>
 						<div class="mobnav-subarrow"><i class="fa fa-plus"></i></div>
 						<ul>
-							<li><a href="#">Category1</a></li>
-							<li><a href="#">Category1</a></li>
-							<li><a href="#">Category1</a></li>
-							<li><a href="#">Category1</a></li>
+							<?php
+							//we select all the categories from the table 
+							$catsql = "SELECT * FROM category";
+							$catres = mysqli_query($connection, $catsql);
+							while($catr = mysqli_fetch_assoc($catres)){
+						 ?>
+						 <!--Here we display all the categories present and also implemented LINKs redirecting it with Catid so as the index.php will display all the products belonging to particular category-->
+							<li><a href="index.php?id=<?php echo $catr['id']; ?>"><?php echo $catr['name']; ?></a></li>
+						<?php } ?>
 						</ul>
 					</li>
 					<li>
