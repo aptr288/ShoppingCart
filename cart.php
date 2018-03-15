@@ -14,8 +14,8 @@ $cart = $_SESSION['cart'];
 			<div class="container">
 				<div class="row">
 					<div class="page_header text-center">
-						<h2>Shop Cart</h2>
-						<p>Get the best kit for smooth shave</p>
+						<h2>UNT Shopping Cart</h2>
+						<p>Spend less. Read more.</p>
 					</div>
 					<div class="col-md-12">
 

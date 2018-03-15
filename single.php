@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require_once 'config/connect.php';
 include 'inc/header.php'; 
 include 'inc/nav.php';  
@@ -24,7 +25,7 @@ if(isset($_GET['id']) & !empty($_GET['id'])){
 				<div class="row">
 					<div class="page_header text-center">
 						<h2>UNT Shopping Cart</h2>
-						<p>Don’t forget to read more</p>
+						<p>Spend less. Read more.</p>
 					</div>
 
 				

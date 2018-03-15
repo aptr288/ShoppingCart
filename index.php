@@ -10,8 +10,8 @@ include 'inc/header.php'; ?>
 			<div class="container">
 				<div class="row">
 					<div class="page_header text-center">
-						<h2>Shop</h2>
-						<p>You can order products from here</p>
+						<h2>UNT Shopping Cart</h2>
+						<p>Spend less. Read more.</p>
 					</div>
 					<div class="col-md-12">
 						<div class="row">
