@@ -11,7 +11,10 @@ include 'inc/header.php';
 include 'inc/nav.php'; 
 //retrieves the customerId from the session 
 $uid = $_SESSION['customerid'];
-$cart = $_SESSION['cart'];
+if(!empty($_SESSION['cart'])){
+                    	//if it has any elements then only assign it to $cart variable
+					$cart = $_SESSION['cart'];}
+
 
 if(isset($_POST) & !empty($_POST)){
 	//We check if all the conditions are agreed, if agree button is not pressed then 

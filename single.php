@@ -1,8 +1,12 @@
 <?php 
 session_start();
+if(!isset($_SESSION['customer']) & empty($_SESSION['customer'])){
+		header('location: login.php');}
 require_once 'config/connect.php';
 include 'inc/header.php'; 
 include 'inc/nav.php';  
+if(!isset($_SESSION['customer']) & empty($_SESSION['customer'])){
+		header('location: login.php');}
 if(isset($_GET['id']) & !empty($_GET['id'])){
 	//Get the products full details whoes id is passed through url 
 	$id = $_GET['id'];

@@ -9,7 +9,7 @@
 include 'inc/header.php'; 
 include 'inc/nav.php'; 
 $uid = $_SESSION['customerid'];
-if(!empty($_SESSION['cart'])){	$cart = $_SESSION['cart'];}
+//$cart = $_SESSION['cart'];
 ?>
 	
 	<!-- SHOP CONTENT -->
@@ -27,49 +27,87 @@ if(!empty($_SESSION['cart'])){	$cart = $_SESSION['cart'];}
 			<table class="cart-table account-table table table-bordered">
 				<thead>
 					<tr>
-						<th>Order</th>
-						<th>Date</th>
-						<th>Status</th>
-						<th>Payment Mode</th>
-						<th>Total</th>
+						<th>Product Name</th>
+						<th>Quantity</th>
+						<th>Price</th>
 						<th></th>
+						<th>Total Price</th>
 					</tr>
 				</thead>
 				<tbody>
 
 				<?php
-				//Get the order details for the user ID from session
-				//Then display them all in table running in loop 
-					$ordsql = "SELECT * FROM orders WHERE uid='$uid'";
+
+					if(isset($_GET['id']) & !empty($_GET['id'])){
+						//Order Id is retrieved from the URL through Get method
+						$oid = $_GET['id'];
+					}else{
+						//If Id is not set redirect back to my account php 
+						header('location: my-account.php');
+					}
+//IMP then we retrieve order DB details which match User Id and Order ID from page which it got redirected
+					$ordsql = "SELECT * FROM orders WHERE uid='$uid' AND id='$oid'";
 					$ordres = mysqli_query($connection, $ordsql);
-					while($ordr = mysqli_fetch_assoc($ordres)){
+					$ordr = mysqli_fetch_assoc($ordres);
+//IMP
+//With PID we get Product name from Product Table
+//Here we give both Order Id and product id to get joined details to display in below table 
+					$orditmsql = "SELECT * FROM orderitems o JOIN products p WHERE o.orderid=$oid AND o.pid=p.id";
+					$orditmres = mysqli_query($connection, $orditmsql);
+					while($orditmr = mysqli_fetch_assoc($orditmres)){
 				?>
 					<tr>
 						<td>
-							<?php echo $ordr['id']; ?>
+							<!--Substr to trim product name and linking product name to single product page with ID -->
+							<a href="single.php?id=<?php echo $orditmr['pid']; ?>"><?php echo substr($orditmr['name'], 0, 25); ?></a>
+						</td>
+						<td>
+							<?php echo $orditmr['pquantity']; ?>
+						</td>
+						<td>
+							INR <?php echo $orditmr['productprice']; ?>/-
+						</td>
+						<td>
+							
+						</td>
+						<td>
+							INR <?php echo $orditmr['productprice']*$orditmr['pquantity']; ?>/-
+						</td>
+					</tr>
+				<?php } ?>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>
+							Order Total
+						</td>
+						<td>
+							<?php echo $ordr['totalprice']; ?>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>
+							Order Status
+						</td>
+						<td>
+							<?php echo $ordr['orderstatus']; ?>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>
+							Order Placed On
 						</td>
 						<td>
 							<?php echo $ordr['timestamp']; ?>
 						</td>
-						<td>
-							<?php echo $ordr['orderstatus']; ?>			
-						</td>
-						<td>
-							<?php echo $ordr['paymentmode']; ?>
-						</td>
-						<td>
-							INR <?php echo $ordr['totalprice']; ?>/-
-						</td>
-						<td>
-							<!--The view order link redirects to single detail page of order where in we retreive all the details regarading order from order item-->
-							<a href="view-order.php?id=<?php echo $ordr['id']; ?>">View</a>
-<!--Hide cancel if order status is already cancel-->
-							<?php if($ordr['orderstatus'] != 'Cancelled'){?>
-							| <a href="cancel-order.php?id=<?php echo $ordr['id']; ?>">Cancel</a>
-							<?php } ?>
-						</td>
 					</tr>
-				<?php } ?>
 				</tbody>
 			</table>		
 
@@ -85,6 +123,8 @@ if(!empty($_SESSION['cart'])){	$cart = $_SESSION['cart'];}
 				<div class="col-md-6">
 								<h4>My Address <a href="edit-address.php">Edit</a></h4>
 					<?php
+//Getting all the users details by joining the USer and UserMeta table
+//We provide a Edit button so as to edit address details in different page
 						$csql = "SELECT u1.firstname, u1.lastname, u1.address1, u1.address2, u1.city, u1.state, u1.country, u1.company, u.email, u1.mobile, u1.zip FROM users u JOIN usersmeta u1 WHERE u.id=u1.uid AND u.id=$uid";
 						$cres = mysqli_query($connection, $csql);
 						if(mysqli_num_rows($cres) == 1){
