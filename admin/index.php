@@ -4,7 +4,8 @@
 	//Each page has this admin session authentication so as no illegal user can directly access the admin pages  
 	//Checks if the user is admin in the login page,If user is admin then user is redirected here
 	//if user email is not set to session then this page cant be accessed so directly sends user back to login page
-	if(!isset($_SESSION['email']) & empty($_SESSION['email'])){
+	
+	if(!isset($_SESSION['admin']) & empty($_SESSION['admin'])){
 		header('location: login.php');
 	}
 ?>

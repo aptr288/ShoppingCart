@@ -2,7 +2,7 @@
 	session_start();
 	require_once '../config/connect.php';
 	//rerouting the user back to login page if email is not set or authentication not happend
-	if(!isset($_SESSION['email']) & empty($_SESSION['email'])){
+	if(!isset($_SESSION['admin']) & empty($_SESSION['admin'])){
 		header('location: login.php');
 	}
 ?>

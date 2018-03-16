@@ -2,7 +2,7 @@
     //Will authenticate the user
 	session_start();
 	require_once '../config/connect.php';
-	if(!isset($_SESSION['email']) & empty($_SESSION['email'])){
+	if(!isset($_SESSION['admin']) & empty($_SESSION['admin'])){
 		header('location: login.php');
 	}
 

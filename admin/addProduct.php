@@ -2,7 +2,7 @@
 //Session checking
 	session_start();
 	require_once '../config/connect.php';
-	if(!isset($_SESSION['email']) & empty($_SESSION['email'])){
+	if(!isset($_SESSION['admin']) & empty($_SESSION['admin'])){
 		header('location: login.php');
 	}
 	//post the product details to DB once the submit button is pressed 

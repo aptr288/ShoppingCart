@@ -1,5 +1,8 @@
-<?php include 'inc/header.php' ?>
-<?php include 'inc/nav.php' ?>
+<?php 
+session_start();
+require_once 'config/connect.php';
+include 'inc/header.php';
+include 'inc/nav.php' ?>
 
 	
 	<!-- SHOP CONTENT -->
@@ -9,20 +12,27 @@
 				<div class="row">
 					<div class="page_header text-center">
 						<h2>Shop - Account</h2>
-						<p>Tagline Here</p>
+						<p>Get the best deals</p>
 					</div>
 					<div class="col-md-12">
 				<div class="row shop-login">
 				<div class="col-md-6">
 					<div class="box-content">
-						<h3 class="heading text-center">I'm a Returning Customer</h3>
+						<h3 class="heading text-center">Sign In</h3>
 						<div class="clearfix space40"></div>
-						<form class="logregform">
+						<!--forms method is set and action is set to redirect towards loginprocess.php to check if user exists -->
+						<?php if(isset($_GET['message'])){
+								if($_GET['message'] == 1){
+						 ?><div class="alert alert-danger" role="alert"> <?php echo "Invalid Login Credentials"; ?> </div>
+
+						 <?php } }?>
+						<form class="logregform" method="post" action ="loginprocess.php">
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
 										<label>Username or E-mail Address</label>
-										<input type="text" value="" class="form-control">
+										<!--updated the name of the feild -->
+										<input type="text" value="" name="email" class="form-control">
 									</div>
 								</div>
 							</div>
@@ -32,7 +42,7 @@
 									<div class="col-md-12">
 										<a class="pull-right" href="#">(Lost Password?)</a>
 										<label>Password</label>
-										<input type="password" value="" class="form-control">
+										<input type="password" value="" name="password" class="form-control">
 									</div>
 								</div>
 							</div>
@@ -54,14 +64,19 @@
 				</div>
 				<div class="col-md-6">
 					<div class="box-content">
-						<h3 class="heading text-center">Register An Account</h3>
+						<h3 class="heading text-center">Sign Up</h3>
 						<div class="clearfix space40"></div>
-						<form class="logregform">
+						<!--forms method is set and action is set to redirect towards RegisterProcess.php to check if user exists -->
+						<?php if(isset($_GET['message'])){ 
+								if($_GET['message'] == 2){
+							?><div class="alert alert-danger" role="alert"> <?php echo "Failed to Register"; ?> </div>
+							<?php } } ?>
+						<form class="logregform" method="post" action="RegisterProcess.php">
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
 										<label>E-mail Address</label>
-										<input type="text" value="" class="form-control">
+										<input type="text" name="email" value="" class="form-control">
 									</div>
 								</div>
 							</div>
@@ -70,11 +85,11 @@
 								<div class="form-group">
 									<div class="col-md-6">
 										<label>Password</label>
-										<input type="password" value="" class="form-control">
+										<input type="password" name="password" value="" class="form-control">
 									</div>
 									<div class="col-md-6">
 										<label>Re-enter Password</label>
-										<input type="password" value="" class="form-control">
+										<input type="password" name="passwordagain" value="" class="form-control">
 									</div>
 								</div>
 							</div>

@@ -16,7 +16,7 @@ require_once '../config/connect.php';
 	if($count == 1)
 	{
 		//echo "User exits, create session and store the session email as enterd for further transanctions";
-		$_SESSION['email'] = $email;
+		$_SESSION['admin'] = $email;
 		//after authentication user is directed to index page 
 		header("location: index.php");
 	}

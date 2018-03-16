@@ -24,7 +24,7 @@
 						<div class="mobnav-subarrow"><i class="fa fa-plus"></i></div>
 						<ul>
 							<li><a href="#">My Orders</a></li>
-							<li><a href="#">Logout</a></li>
+							<li><a href="logout.php">Logout</a></li>
 						</ul>
 					</li>
 					<li>

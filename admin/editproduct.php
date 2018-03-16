@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	require_once '../config/connect.php';
-	if(!isset($_SESSION['email']) & empty($_SESSION['email'])){
+	if(!isset($_SESSION['admin']) & empty($_SESSION['admin'])){
 		header('location: login.php');
 	}
    //Getting the Id from the products.php page for which product the details have to be updated

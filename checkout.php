@@ -1,12 +1,18 @@
-<?php include 'inc/header.php' ?>
-<?php include 'inc/nav.php' ?>
+<?php 
+session_start();
+//if user email is not set to session then this page cant be accessed, so directly sends user back to login page
+if(!isset($_SESSION['customer']) & empty($_SESSION['customer'])){
+		header('location: login.php');	}
+require_once 'config/connect.php';
+include 'inc/header.php';
+include 'inc/nav.php' ?>
 	
 	<!-- SHOP CONTENT -->
 	<section id="content">
 		<div class="content-blog">
 					<div class="page_header text-center">
-						<h2>Shop - Checkout</h2>
-						<p>Get the best kit for smooth shave</p>
+						<h2>UNT Checkout</h2>
+						<p>Get the best deals</p>
 					</div>
 
 <div class="container">
