@@ -1,8 +1,11 @@
+<?php
+require_once 'config/connect.php';
+?>
 <div class="menu-wrap">
 				<div id="mobnav-btn">Menu <i class="fa fa-bars"></i></div>
 				<ul class="sf-menu">
 					<li>
-						<a href="#">Home</a>
+						<a href="index.php">Home</a>
 					</li>
 					<li>
 						<a href="#">Shop</a>
@@ -33,13 +36,19 @@
 				</ul>
 				<div class="header-xtra">
 					<!--Session values are retreived -->
-					<?php $cart = $_SESSION['cart'];?>
+
+					<?php $cart = [];
+					//Initialize the cart with empty array
+					//Check if the session has any array elements
+                    if(!empty($_SESSION['cart'])){
+                    	//if it has any elements then only assign it to $cart variable
+					$cart = $_SESSION['cart'];}?>
 					<div class="s-cart">
 						<div class="sc-ico">
 							<i class="fa fa-shopping-cart"></i>
 							<em>
 								<!--We update the count of the items on cart icon as well as in menu text  -->
-								<?php echo count($cart); ?>
+								<?php if(empty($cart)){ echo 0; }else {echo count($cart);} ?>
 									
 							</em>
 						</div>
