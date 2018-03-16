@@ -20,12 +20,13 @@ include 'inc/nav.php' ?>
 					<div class="box-content">
 						<h3 class="heading text-center">Sign In</h3>
 						<div class="clearfix space40"></div>
-						<!--forms method is set and action is set to redirect towards loginprocess.php to check if user exists -->
+						<!--Error handling uding get messgae from url-->
 						<?php if(isset($_GET['message'])){
 								if($_GET['message'] == 1){
 						 ?><div class="alert alert-danger" role="alert"> <?php echo "Invalid Login Credentials"; ?> </div>
 
 						 <?php } }?>
+						<!--forms method is set and action is set to redirect towards loginprocess.php to check if user exists -->
 						<form class="logregform" method="post" action ="loginprocess.php">
 							<div class="row">
 								<div class="form-group">
@@ -66,11 +67,12 @@ include 'inc/nav.php' ?>
 					<div class="box-content">
 						<h3 class="heading text-center">Sign Up</h3>
 						<div class="clearfix space40"></div>
-						<!--forms method is set and action is set to redirect towards RegisterProcess.php to check if user exists -->
+						<!--Error handling uding get messgae from url-->
 						<?php if(isset($_GET['message'])){ 
 								if($_GET['message'] == 2){
 							?><div class="alert alert-danger" role="alert"> <?php echo "Failed to Register"; ?> </div>
 							<?php } } ?>
+						<!--forms method is set and action is set to redirect towards RegisterProcess.php to check if user exists -->
 						<form class="logregform" method="post" action="RegisterProcess.php">
 							<div class="row">
 								<div class="form-group">
