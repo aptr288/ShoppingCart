@@ -1,22 +1,57 @@
 <?php
 	session_start();
 	require_once '../config/connect.php';
-	//Each page has this admin session authentication so as no illegal user can directly access the admin pages  
-	//Checks if the user is admin in the login page,If user is admin then user is redirected here
-	//if user email is not set to session then this page cant be accessed so directly sends user back to login page
-	
 	if(!isset($_SESSION['admin']) & empty($_SESSION['admin'])){
 		header('location: login.php');
 	}
 ?>
-<?php include 'inc/header.php' ?>
-<?php include 'inc/nav.php' ?>
-	<!-- HEADER -->
-	
-			
-	
-	<div class="close-btn fa fa-times"></div>
+<?php include 'inc/header.php'; ?>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      google.charts.setOnLoadCallback(drawChart1);
 
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'Weekly Revenue',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+      function drawChart1() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'Weekly Orders',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+
+        chart.draw(data, options);
+      }
+    </script>
+<?php include 'inc/nav.php'; ?>
 	
 	<!-- SHOP CONTENT -->
 	<section id="content">
@@ -24,55 +59,24 @@
 			<div class="container">
 				<div class="row">
 					<div class="page_header text-center">
-						<h2>Shop</h2>
-						<p>You can order products from here</p>
+						<h2>Dashboard</h2>
+						<!-- <p>You can order products from here</p> -->
 					</div>
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<div class="row">
-							<div id="shop-mason" class="shop-mason-4col">
-								<div class="sm-item isotope-item">
-									<div class="product">
-										<div class="product-thumb">
-											<img src="images/shop/1.jpg" class="img-responsive" alt="">
-											<div class="product-overlay">
-												<span>
-												<a href="./shop-single-full.html" class="fa fa-link"></a>
-												<a href="./shop-single-full.html" class="fa fa-shopping-cart"></a>
-												</span>					
-											</div>
-										</div>
-										<div class="rating">
-											<span class="fa fa-star act"></span>
-											<span class="fa fa-star act"></span>
-											<span class="fa fa-star act"></span>
-											<span class="fa fa-star act"></span>
-											<span class="fa fa-star act"></span>
-										</div>
-										<h2 class="product-title"><a href="#">Shave Knives</a></h2>
-										<div class="product-price">$79.00<span>$200.00</span></div>
-									</div>
-								</div>
-								
-							</div>
+							<div id="curve_chart" style="width: 550px; height: 300px"></div>
 						</div>
-						<div class="clearfix"></div>
-						<!-- Pagination -->
-						<div class="page_nav">
-							<a href=""><i class="fa fa-angle-left"></i></a>
-							<a href="" class="active">1</a>
-							<a href="">2</a>
-							<a href="">3</a>
-							<a class="no-active">...</a>
-							<a href="">9</a>
-							<a href=""><i class="fa fa-angle-right"></i></a>
+
+					</div>
+
+					<div class="col-md-6">
+						<div class="row">
+							<div id="curve_chart1" style="width: 550px; height: 300px"></div>
 						</div>
-						<!-- End Pagination -->
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	
-	
-	<!-- FOOTER -->
 <?php include 'inc/footer.php' ?>

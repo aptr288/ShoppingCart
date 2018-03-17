@@ -5,7 +5,7 @@ require_once 'config/connect.php';
 				<div id="mobnav-btn">Menu <i class="fa fa-bars"></i></div>
 				<ul class="sf-menu">
 					<li>
-						<a href="index.php">Home</a>
+						<a href="http://localhost/ecomphp/index.php">Home</a>
 					</li>
 					<li>
 						<a href="#">Shop</a>
@@ -22,14 +22,18 @@ require_once 'config/connect.php';
 						<?php } ?>
 						</ul>
 					</li>
+<!--If there is no user session set then MY Account Details are hidden-->
+					<?php if(!empty($_SESSION['customer'])){ ?>
 					<li>
 						<a href="#">My Account</a>
 						<div class="mobnav-subarrow"><i class="fa fa-plus"></i></div>
 						<ul>
-							<li><a href="#">My Orders</a></li>
-							<li><a href="logout.php">Logout</a></li>
+							<li><a href="http://localhost/ecomphp/my-account.php">My Orders</a></li>
+							<li><a href="http://localhost/ecomphp/edit-address.php">Update Address</a></li>
+							<li><a href="http://localhost/ecomphp/logout.php">Logout</a></li>
 						</ul>
 					</li>
+					<?php }?>
 					<li>
 						<a href="#">Contact</a>
 					</li>
