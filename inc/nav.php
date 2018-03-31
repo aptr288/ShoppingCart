@@ -82,7 +82,7 @@ require_once 'config/connect.php';
 							<?php 
 							$total = $total + ($navcartr['price']*$value['quantity']);
 							} ?>
-							<div class="ci-total">Subtotal: INR <?php echo $total; ?>.00/-</div>
+							<div class="ci-total">Subtotal: $ <?php echo $total; ?>.00</div>
 							<div class="cart-btn">
 								<a href="cart.php">View Bag</a>
 								<a href="checkout.php">Checkout</a>

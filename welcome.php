@@ -2,10 +2,11 @@
 session_start();
 require_once 'config/connect.php';
 if(!isset($_SESSION['customer']) & empty($_SESSION['customer'])){
-		header('location: login.php');}
+		//header('location: login.php');}
+}
 include 'inc/header.php'; ?>
 <!--Navagation-->
-<?php include 'inc/nav.php'; ?>
+<?php include 'inc/welcomenav.php'; ?>
 	
 	<!-- SHOP CONTENT -->
 	<section id="content">

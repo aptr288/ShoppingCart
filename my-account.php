@@ -63,7 +63,7 @@ if(!empty($_SESSION['cart'])){	$cart = $_SESSION['cart'];}
 						<td>
 							<!--The view order link redirects to single detail page of order where in we retreive all the details regarading order from order item-->
 							<a href="view-order.php?id=<?php echo $ordr['id']; ?>">View</a>
-<!--Hide cancel if order status is already cancel-->
+<!--Hide cancel if order status is already cancelqlPHp-->
 							<?php if($ordr['orderstatus'] != 'Cancelled'){?>
 							| <a href="cancel-order.php?id=<?php echo $ordr['id']; ?>">Cancel</a>
 							<?php } ?>
