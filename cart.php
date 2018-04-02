@@ -56,14 +56,14 @@ $cart = $_SESSION['cart'];
 							<a href="single.php?id=<?php echo $cartr['id']; ?>"><?php echo substr($cartr['name'], 0 , 30); ?></a>					
 						</td>
 						<td>
-							<span class="amount">INR<?php echo $cartr['price']; ?>.00/-</span>					
+							<span class="amount">$<?php echo $cartr['price']; ?>.00</span>					
 						</td>
 						<td>
 							<div class="quantity"><?php echo $value['quantity']; ?></div>
 						</td>
 						<td>
 							<!--Here the amount is calculated by multplying the quantity with the price -->
-							<span class="amount">INR<?php echo ($cartr['price']*$value['quantity']); ?>.00/-</span>					
+							<span class="amount">$<?php echo ($cartr['price']*$value['quantity']); ?>.00</span>					
 						</td>
 					</tr>
 				<?php 
@@ -96,7 +96,7 @@ $cart = $_SESSION['cart'];
 						<tbody>
 							<tr>
 								<th>Cart Subtotal</th>
-								<td><span class="amount">INR <?php echo $total; ?>.00/-</span></td>
+								<td><span class="amount">$<?php echo $total; ?>.00</span></td>
 							</tr>
 							<tr>
 								<th>Shipping and Handling</th>
@@ -106,7 +106,7 @@ $cart = $_SESSION['cart'];
 							</tr>
 							<tr>
 								<th>Order Total</th>
-								<td><strong><span class="amount">INR <?php echo $total; ?>.00/-</span></strong> </td>
+								<td><strong><span class="amount">$ <?php echo $total; ?>.00</span></strong> </td>
 							</tr>
 						</tbody>
 					</table>
