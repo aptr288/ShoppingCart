@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2018 at 04:58 AM
+-- Generation Time: Apr 03, 2018 at 04:48 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -42,7 +42,8 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`id`, `firstname`, `lastname`, `email`, `password`) VALUES
 (1, 'pruthvi', 'anumandla', 'aptr288@gmail.com', '583f72a833c7dfd63c03edba3776247a'),
-(2, 'kavya', 'ANUMANDLA', 'aptr', '583f72a833c7dfd63c03edba3776247a');
+(2, 'kavya', 'ANUMANDLA', 'aptr', '583f72a833c7dfd63c03edba3776247a'),
+(3, '', '', 'aptr', '583f72a833c7dfd63c03edba3776247a');
 
 -- --------------------------------------------------------
 
@@ -126,7 +127,7 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `uid`, `totalprice`, `orderstatus`, `paymentmode`, `timestamp`) VALUES
 (1, 8, '40998', 'Order Placed', 'cod', '2018-03-16 00:00:10'),
-(2, 8, '11678', 'Order Placed', 'cod', '2018-03-16 01:11:04'),
+(2, 8, '11678', 'Delivered', 'cod', '2018-03-16 01:11:04'),
 (3, 9, '12212', 'Order Placed', '', '2018-03-16 13:29:10'),
 (4, 5, '0', 'Cancelled', '', '2018-03-16 16:34:58'),
 (5, 5, '13001', 'Order Placed', '', '2018-03-16 16:53:56'),
@@ -158,7 +159,8 @@ CREATE TABLE `ordertracking` (
 INSERT INTO `ordertracking` (`id`, `orderid`, `status`, `message`, `timestamp`) VALUES
 (1, 8, 'Cancelled', ' just nit ', '2018-03-16 18:02:46'),
 (2, 8, 'In Progress', 'Nothing', '2018-03-16 19:18:18'),
-(3, 4, 'Cancelled', ' ', '2018-03-29 20:41:13');
+(3, 4, 'Cancelled', ' ', '2018-03-29 20:41:13'),
+(4, 2, 'Delivered', ' ', '2018-03-29 22:30:34');
 
 -- --------------------------------------------------------
 
@@ -172,31 +174,32 @@ CREATE TABLE `products` (
   `catid` int(11) NOT NULL,
   `price` varchar(255) NOT NULL,
   `thumb` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL
+  `description` varchar(255) NOT NULL,
+  `quantity` int(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `catid`, `price`, `thumb`, `description`) VALUES
-(7, 'Computer Net', 8, '1100', 'uploads/cn.jpg', 'Networking related'),
-(8, 'Database System Concepts', 6, '789', 'uploads/db.jpg', 'Fundamental FDB '),
-(9, 'DB Design', 6, '765', 'uploads/dbdesign.jpg', 'Designing the database'),
-(10, 'Software Engineering', 9, '543', 'uploads/softengi.jpg', 'Methods of software engineering and best practices'),
-(11, 'E-commerce ', 7, '12212', 'uploads/se.jpg', 'Regarding secure transactions and easy business '),
-(12, 'Security Engineering ', 7, '34324', 'uploads/security engineering.jpg', 'Proper techniques to secure the data '),
-(13, 'Expert Performance Indexing for SQL Server', 6, '789', 'uploads/Expert Performance Indexing for SQL Server.jpg', 'Expert Performance Indexing for SQL Server 2012 is a deep dive into perhaps the single-most important facet of good performance: indexes, and how to best use them. The book begins in the shallow waters with explanations of the types of indexes and how the'),
-(14, 'Professional Microsoft SQL Server', 6, '5654', 'uploads/Professional Microsoft SQL Server.jpg', 'A must-have guide for the latest updates to the new release of Reporting Services SQL Server Reporting Services allows you to create reports and business intelligence (BI) solutions. With this updated resource, a team of experts shows you how Reporting Se'),
-(15, 'Star Schema', 6, '876', 'uploads/Star Schema.jpg', 'The definitive guide to dimensional design for your data warehouse Learn the best practices of dimensional design. Star Schema: The Complete Reference offers in-depth coverage of design principles and their underlying rationales. Organized around design c'),
-(16, 'Metasploit: The Penetration Tester\'s Guide', 7, '3233', 'uploads/Metasploit.jpg', '\"The best guide to the Metasploit Framework.\" â€”HD Moore, Founder of the Metasploit ProjectThe Metasploit Framework makes discovering, exploiting, and sharing vulnerabilities quick and relatively painless. But while Metasploit is used by security profess'),
-(17, 'Spam Nation: The Inside Story of Organized Cybercrime', 7, '3232', 'uploads/Spam nation.jpg', 'In Spam Nation, investigative journalist and cybersecurity expert Brian Krebs unmasks the criminal masterminds driving some of the biggest spam and hacker operations targeting Americans and their bank accounts. '),
-(18, 'Hacking: The Art of Exploitation', 7, '7655', 'uploads/Hacking.jpg', 'A comprehensive introduction to the techniques of exploitation and creative problem-solving methods commonly referred to as \"hacking.\" It shows how hackers exploit programs and write exploits, instead of just how to run other people\'s exploits. This book '),
-(19, 'Worm: The First Digital World War', 7, '675', 'uploads/Worm.jpg', 'From the author of \"Black Hawk Down\" comes the story of the battle between those determined to exploit the internet and those committed to protect itthe ongoing war taking place literally beneath our fingertips. '),
-(20, 'Computer Networking: A Top-Down Approach', 8, '232', 'uploads/CN TopDown Approach.jpg', 'Building on the successful top-down approach of previous editions, the Fourth Edition of Computer Networking continues with an early emphasis on application-layer paradigms and application programming interfaces, encouraging a hands-on experience with pro'),
-(21, 'The Protocols (TCP/IP Illustrated)', 8, '323', 'uploads/Protocols.jpg', 'Fatbrain Review With a hands-on approach to studying, this best-selling guide explains TCP/IP protocols. In eight chapters, it provides the most thorough coverage of TCP available. It also covers the newest TCP/IP features, including multicasting, path MT'),
-(22, 'Fundamentals of Software Engineering', 9, '766', 'uploads/Funda of SE.jpg', 'This book provides selective, in-depth coverage of the fundamentals of software engineering by stressing principles and methods through rigorous formal and informal approaches. In contrast to other books which are based on the lifecycle model of software '),
-(23, 'Facts and Fallacies of Software Engineering', 9, '4344', 'uploads/Facts n fallacies of SE.jpg', 'The practice of building software is a \"new kid on the block\" technology. Though it may not seem this way for those who have been in the field for most of their careers, in the overall scheme of professions, software builders are relative \"newbies.\" In th');
+INSERT INTO `products` (`id`, `name`, `catid`, `price`, `thumb`, `description`, `quantity`) VALUES
+(7, 'Computer Net', 8, '1100', 'uploads/cn.jpg', 'Networking related', 100),
+(8, 'Database System Concepts', 6, '789', 'uploads/db.jpg', 'Fundamental FDB ', 100),
+(9, 'DB Design', 6, '765', 'uploads/dbdesign.jpg', 'Designing the database', 100),
+(10, 'Software Engineering', 9, '543', 'uploads/softengi.jpg', 'Methods of software engineering and best practices', 100),
+(11, 'E-commerce ', 7, '12212', 'uploads/se.jpg', 'Regarding secure transactions and easy business ', 100),
+(12, 'Security Engineering ', 7, '34324', 'uploads/security engineering.jpg', 'Proper techniques to secure the data ', -1),
+(13, 'Expert Performance Indexing for SQL Server', 6, '789', 'uploads/Expert Performance Indexing for SQL Server.jpg', 'Expert Performance Indexing for SQL Server 2012 is a deep dive into perhaps the single-most important facet of good performance: indexes, and how to best use them. The book begins in the shallow waters with explanations of the types of indexes and how the', 100),
+(14, 'Professional Microsoft SQL Server', 6, '5654', 'uploads/Professional Microsoft SQL Server.jpg', 'A must-have guide for the latest updates to the new release of Reporting Services SQL Server Reporting Services allows you to create reports and business intelligence (BI) solutions. With this updated resource, a team of experts shows you how Reporting Se', 199),
+(15, 'Star Schema', 6, '876', 'uploads/Star Schema.jpg', 'The definitive guide to dimensional design for your data warehouse Learn the best practices of dimensional design. Star Schema: The Complete Reference offers in-depth coverage of design principles and their underlying rationales. Organized around design c', 100),
+(16, 'Metasploit: The Penetration Tester\'s Guide', 7, '3233', 'uploads/Metasploit.jpg', '\"The best guide to the Metasploit Framework.\" â€”HD Moore, Founder of the Metasploit ProjectThe Metasploit Framework makes discovering, exploiting, and sharing vulnerabilities quick and relatively painless. But while Metasploit is used by security profess', 100),
+(17, 'Spam Nation: The Inside Story of Organized Cybercrime', 7, '3232', 'uploads/Spam nation.jpg', 'In Spam Nation, investigative journalist and cybersecurity expert Brian Krebs unmasks the criminal masterminds driving some of the biggest spam and hacker operations targeting Americans and their bank accounts. ', 123),
+(18, 'Hacking: The Art of Exploitation', 7, '7655', 'uploads/Hacking.jpg', 'A comprehensive introduction to the techniques of exploitation and creative problem-solving methods commonly referred to as \"hacking.\" It shows how hackers exploit programs and write exploits, instead of just how to run other people\'s exploits. This book ', 0),
+(19, 'Worm: The First Digital World War', 7, '675', 'uploads/Worm.jpg', 'From the author of \"Black Hawk Down\" comes the story of the battle between those determined to exploit the internet and those committed to protect itthe ongoing war taking place literally beneath our fingertips. ', 1234),
+(20, 'Computer Networking: A Top-Down Approach', 8, '232', 'uploads/CN TopDown Approach.jpg', 'Building on the successful top-down approach of previous editions, the Fourth Edition of Computer Networking continues with an early emphasis on application-layer paradigms and application programming interfaces, encouraging a hands-on experience with pro', 567),
+(21, 'The Protocols (TCP/IP Illustrated)', 8, '323', 'uploads/Protocols.jpg', 'Fatbrain Review With a hands-on approach to studying, this best-selling guide explains TCP/IP protocols. In eight chapters, it provides the most thorough coverage of TCP available. It also covers the newest TCP/IP features, including multicasting, path MT', 67),
+(22, 'Fundamentals of Software Engineering', 9, '766', 'uploads/Funda of SE.jpg', 'This book provides selective, in-depth coverage of the fundamentals of software engineering by stressing principles and methods through rigorous formal and informal approaches. In contrast to other books which are based on the lifecycle model of software ', 677),
+(23, 'Facts and Fallacies of Software Engineering', 9, '4344', 'uploads/Facts n fallacies of SE.jpg', 'The practice of building software is a \"new kid on the block\" technology. Though it may not seem this way for those who have been in the field for most of their careers, in the overall scheme of professions, software builders are relative \"newbies.\" In th', 65);
 
 -- --------------------------------------------------------
 
@@ -321,7 +324,7 @@ ALTER TABLE `usersmeta`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -339,13 +342,13 @@ ALTER TABLE `orderitems`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `ordertracking`
 --
 ALTER TABLE `ordertracking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `products`
