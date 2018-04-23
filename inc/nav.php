@@ -1,6 +1,71 @@
 <?php
 require_once 'config/connect.php';
 ?>
+<style type="text/css">
+    body{
+        font-family: Arail, sans-serif;
+    }
+    /* Formatting search box */
+    .search-box{
+        width: 200px;
+        position: relative;
+        display: inline-block;
+        font-size: 14px;
+    }
+    .search-box input[type="text"]{
+        height: 32px;
+        padding: 5px 10px;
+        border: 1px solid #CCCCCC;
+        font-size: 14px;
+    }
+    .result{
+        position: absolute;        
+        z-index: 999;
+        top: 100%;
+        left: 0;
+    }
+    .search-box input[type="text"], .result{
+        width: 100%;
+        box-sizing: border-box;
+    }
+    /* Formatting result items */
+    .result p{
+        margin: 0;
+        padding: 7px 10px;
+        border: 1px solid #CCCCCC;
+        border-top: none;
+        cursor: pointer;
+        background: #f2f2f2;
+    }
+    .result p:hover{
+        background: #f2f2f2;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.search-box input[type="text"]').on("keyup input", function(){
+        /* Get input value on change */
+        var inputVal = $(this).val();
+        var resultDropdown = $(this).siblings(".result");
+        if(inputVal.length){
+            $.get("backend-search.php", {term: inputVal}).done(function(data){
+                // Display the returned data in browser
+                resultDropdown.html(data);
+            });
+        } else{
+            resultDropdown.empty();
+        }
+    });
+    
+    // Set search input value on click of result item
+    $(document).on("click", ".result p", function(){
+        $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
+        $(this).parent(".result").empty();
+    });
+});
+</script>
+    
 <div class="menu-wrap">
 				<div id="mobnav-btn">Menu <i class="fa fa-bars"></i></div>
 				<ul class="sf-menu">
@@ -28,9 +93,9 @@ require_once 'config/connect.php';
 						<a href="#">My Account</a>
 						<div class="mobnav-subarrow"><i class="fa fa-plus"></i></div>
 						<ul>
-							<li><a href="http://localhost/ecomphp/my-account.php">My Orders</a></li>
-							<li><a href="http://localhost/ecomphp/edit-address.php">Update Address</a></li>
-							<li><a href="http://localhost/ecomphp/logout.php">Logout</a></li>
+							<li><a href="/ecomphp/my-account.php">My Orders</a></li>
+							<li><a href="/edit-address.php">Update Address</a></li>
+							<li><a href="/ecomphp/logout.php">Logout</a></li>
 						</ul>
 					</li>
 					<?php }?>
@@ -72,7 +137,7 @@ require_once 'config/connect.php';
 								<img src="admin/<?php echo $navcartr['thumb']; ?>" width="70" alt=""/>
 								<div class="ci-item-info">
 									<h5><a href="single.php?id=<?php echo $navcartr['id']; ?>"><?php echo substr($navcartr['name'], 0 , 20); ?></a></h5>
-									<p><?php echo $value['quantity']; ?> x INR <?php echo $navcartr['price']; ?>.00/-</p>
+									<p><?php echo $value['quantity']; ?> x $ <?php echo $navcartr['price']; ?>.00/-</p>
 									<div class="ci-edit">
 										<!-- <a href="#" class="edit fa fa-edit"></a> -->
 										<a href="delcart.php?id=<?php echo $key; ?>" class="edit fa fa-trash"></a>
@@ -81,6 +146,7 @@ require_once 'config/connect.php';
 							</div>
 							<?php 
 							$total = $total + ($navcartr['price']*$value['quantity']);
+
 							} ?>
 							<div class="ci-total">Subtotal: $ <?php echo $total; ?>.00</div>
 							<div class="cart-btn">
@@ -90,15 +156,10 @@ require_once 'config/connect.php';
 						</div>
 					</div>
 					<div class="s-search">
-						<div class="ss-ico"><i class="fa fa-search"></i></div>
-						<div class="search-block">
-							<div class="ssc-inner">
-								<form>
-									<input type="text" placeholder="Type Search text here...">
-									<button type="submit"><i class="fa fa-search"></i></button>
-								</form>
-							</div>
-						</div>
+						<div class="search-box">
+       					 <input type="text" autocomplete="off" placeholder="Search products..." />
+        					<div class="result"></div>
+    					</div>
 					</div>
 				</div>
 			</div>

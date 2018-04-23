@@ -56,7 +56,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3 col-xs-5 col-md-offset-5 logo">
-					<a href="http://localhost/ecomphp/index.php"><img src="images\logo1.png" class="img-responsive" width="300" height="40"   alt="UNT Shopping Cart"/></a>
+					
 				</div>
 				<div class="col-md-9 col-xs-7">
 					<div class="top-bar">
