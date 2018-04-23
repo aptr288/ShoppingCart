@@ -65,13 +65,13 @@ $uid = $_SESSION['customerid'];
 							<?php echo $orditmr['pquantity']; ?>
 						</td>
 						<td>
-							INR <?php echo $orditmr['productprice']; ?>/-
+							$ <?php echo $orditmr['productprice']; ?>/-
 						</td>
 						<td>
 							
 						</td>
 						<td>
-							INR <?php echo $orditmr['productprice']*$orditmr['pquantity']; ?>/-
+							$ <?php echo $orditmr['productprice']*$orditmr['pquantity']; ?>/-
 						</td>
 					</tr>
 				<?php } ?>
@@ -83,7 +83,7 @@ $uid = $_SESSION['customerid'];
 							Order Total
 						</td>
 						<td>
-							<?php echo $ordr['totalprice']; ?>
+							$ <?php echo $ordr['totalprice']; ?>/-
 						</td>
 					</tr>
 					<tr>

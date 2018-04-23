@@ -58,7 +58,7 @@ if(!empty($_SESSION['cart'])){	$cart = $_SESSION['cart'];}
 							<?php echo $ordr['paymentmode']; ?>
 						</td>
 						<td>
-							INR <?php echo $ordr['totalprice']; ?>/-
+							$ <?php echo $ordr['totalprice']; ?>/-
 						</td>
 						<td>
 							<!--The view order link redirects to single detail page of order where in we retreive all the details regarading order from order item-->

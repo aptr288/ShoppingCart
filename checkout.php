@@ -4,23 +4,39 @@
 	session_start();
 	require_once 'config/connect.php';
 	//User Authentication
+	if(!empty($_SESSION['cart'])){
+                    	//if it has any elements then only assign it to $cart variable
+					$cart = $_SESSION['cart'];
+					
+				}
+				else
+				{
+					 echo "<script>
+						alert('Cart is empty add items to cart before you checkout');
+						window.location.href='index.php';
+						</script>";
+					//header('location: index.php');
+				}
 	if(!isset($_SESSION['customer']) & empty($_SESSION['customer'])){
-		header('location: login.php');
+		echo "<script>
+						
+						window.location.href='login.php';
+						</script>";
+		//header('location: login.php');
 	}
-include 'inc/header.php'; 
-include 'inc/nav.php'; 
+
 //retrieves the customerId from the session 
 $uid = $_SESSION['customerid'];
-if(!empty($_SESSION['cart'])){
-                    	//if it has any elements then only assign it to $cart variable
-					$cart = $_SESSION['cart'];}
 
+include 'inc/header.php'; 
+include 'inc/nav.php'; 
 
 if(isset($_POST) & !empty($_POST)){
 	//We check if all the conditions are agreed, if agree button is not pressed then 
 	//we cant proceed further 
-	if($_POST['agree'] == true){
+	if(isset($_POST['agree']) & $_POST['agree'] == true){
 		//We sanatize the inputs as these values will be inserted into database so may cause issues if they are not sanatized properly 
+		if(!empty($_POST['country'])&&!empty($_POST['fname'])&&!empty($_POST['lname'])&&!empty($_POST['company'])&&!empty($_POST['address1'])&&!empty($_POST['address2'])&&!empty($_POST['city'])&&!empty($_POST['state'])&&!empty($_POST['phone'])&&!empty($_POST['payment'])&&!empty($_POST['zipcode'])){
 		$country = filter_var($_POST['country'], FILTER_SANITIZE_STRING);
 		$fname = filter_var($_POST['fname'], FILTER_SANITIZE_STRING);
 		$lname = filter_var($_POST['lname'], FILTER_SANITIZE_STRING);
@@ -55,6 +71,10 @@ if(isset($_POST) & !empty($_POST)){
 					$ordr = mysqli_fetch_assoc($ordres);
 
 					$total = $total + ($ordr['price']*$value['quantity']);
+					$fin=$ordr['quantity']-$value['quantity'];
+					$quansql = "UPDATE products SET quantity=$fin WHERE id=$key";
+					$quanres = mysqli_query($connection, $quansql);
+					
 				}
 //Then update the order details with 
 //The UID is userId which is retrived from Session 
@@ -80,8 +100,7 @@ if(isset($_POST) & !empty($_POST)){
 						$productprice = $ordr['price'];
 						//We get the quantity of items ordered from Cart session
 						$quantity = $value['quantity'];
-
-
+						$_SESSION['dontknow']=$orderid;
 						$orditmsql = "INSERT INTO orderitems (pid, orderid, productprice, pquantity) VALUES ('$pid', '$orderid', '$productprice', '$quantity')";
 						$orditmres = mysqli_query($connection, $orditmsql) or die(mysqli_error($connection));
 						
@@ -89,9 +108,16 @@ if(isset($_POST) & !empty($_POST)){
 				}
 //If order is placed and order table is succesfully updated then we unset the session and redirect the user to my-account.php
 				unset($_SESSION['cart']);
-				header("location: my-account.php");
-			}
+				if($_POST['payment'] == cod){
+					header("location: my-account.php");
+					exit();
+				}
+				else 
+				{
+					header("location: paypal/index.php");
+				exit();}
 		}
+	}
 		else
 		{
 			//insert data in usersmeta table
@@ -106,6 +132,7 @@ if(isset($_POST) & !empty($_POST)){
 					$ordres = mysqli_query($connection, $ordsql);
 					$ordr = mysqli_fetch_assoc($ordres);
 
+					//$total = $total + ($ordr['price']*$value['quantity']);
 					$total = $total + ($ordr['price']*$value['quantity']);
 				}
 
@@ -124,7 +151,7 @@ if(isset($_POST) & !empty($_POST)){
 						$productprice = $ordr['price'];
 						$quantity = $value['quantity'];
 
-
+						$_SESSION['dontknow']=$orderid;
 						$orditmsql = "INSERT INTO orderitems (pid, orderid, productprice, pquantity) VALUES ('$pid', '$orderid', '$productprice', '$quantity')";
 						$orditmres = mysqli_query($connection, $orditmsql) or die(mysqli_error($connection));
 						//if($orditmres){
@@ -133,11 +160,27 @@ if(isset($_POST) & !empty($_POST)){
 					}
 				}
 				unset($_SESSION['cart']);
-				header("location: my-account.php");
+				if($_POST['payment'] == paypal){
+					header("location: paypal/index.php");
+					exit();
+				}
+				else 
+				{
+					header("location: my-account.php");
+					
+				
+				exit();}
 			}
-
 		}
 	}
+	else
+	{
+    //if not inserted or not unique then the registration will be failed and message will be retreived with help of the below message 2
+    //$fmsg = "Invalid Login Credentials";
+    header("location: checkout.php?message=1");
+  	}
+	}
+
 
 }
 
@@ -154,6 +197,11 @@ $r = mysqli_fetch_assoc($res);
 						<h2>Shop - Checkout</h2>
 						<p>Get the best kit for smooth shave</p>
 					</div>
+					<?php if(isset($_GET['message'])){
+								if($_GET['message'] == 1){
+						 ?><div class="alert alert-danger" role="alert"> <?php echo "enter all details"; ?> </div>
+
+						 <?php } }?>
 <form method="post">
 <div class="container">
 			<div class="row">
@@ -252,28 +300,27 @@ $r = mysqli_fetch_assoc($res);
 				</tbody>
 			</table>
 			
+			
 			<div class="clearfix space30"></div>
 			<h4 class="heading">Payment Method</h4>
 			<div class="clearfix space20"></div>
 			
 			<div class="payment-method">
 				<div class="row">
+
+					<div class="col-md-4">
+							<input name="payment" id="radio1" style="font-weight:bold" class="css-checkbox" type="radio"><span value="paypal">Paypal</span>
+							<div class="space20"></div>
+							
+						</div>
 					
 						<div class="col-md-4">
-							<input name="payment" id="radio1" class="css-checkbox" type="radio" value="cod"><span>Cash On Delivery</span>
+							<input name="payment" id="radio2" style="font-weight:bold" class="css-checkbox" type="radio" value="cod"><span>Cash On Delivery</span>
 							<div class="space20"></div>
-							<p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won't be shipped until the funds have cleared in our account.</p>
+							
 						</div>
-						<div class="col-md-4">
-							<input name="payment" id="radio2" class="css-checkbox" type="radio"><span value="cheque">Cheque Payment</span>
-							<div class="space20"></div>
-							<p>Please send your cheque to BLVCK Fashion House, Oatland Rood, UK, LS71JR</p>
-						</div>
-						<div class="col-md-4">
-							<input name="payment" id="radio3" class="css-checkbox" type="radio"><span value="paypal">Paypal</span>
-							<div class="space20"></div>
-							<p>Pay via PayPal; you can pay with your credit card if you don't have a PayPal account</p>
-						</div>
+						
+						
 					
 				</div>
 				<div class="space30"></div>

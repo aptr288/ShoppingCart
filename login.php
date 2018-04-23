@@ -4,6 +4,14 @@ require_once 'config/connect.php';
 include 'inc/header.php';
 include 'inc/nav.php' ?>
 
+<!DOCTYPE HTML>  
+<html>
+<head>
+<style>
+.error {color: #FF0000;}
+</style>
+</head>
+<body>  
 	
 	<!-- SHOP CONTENT -->
 	<section id="content">
@@ -28,12 +36,13 @@ include 'inc/nav.php' ?>
 						 <?php } }?>
 						<!--forms method is set and action is set to redirect towards loginprocess.php to check if user exists -->
 						<form class="logregform" method="post" action ="loginprocess.php">
+						<p><span class="error">* Required field.</span></p>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<label>Username or E-mail Address</label>
-										<!--updated the name of the feild -->
-										<input type="text" value="" name="email" class="form-control">
+										<label><b>Username or E-mail Address</b><span class="error">*</span></label>
+										<!--updated the name of the field -->
+										<input type="email" value="" name="email" class="form-control">
 									</div>
 								</div>
 							</div>
@@ -41,8 +50,8 @@ include 'inc/nav.php' ?>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<a class="pull-right" href="#">(Lost Password?)</a>
-										<label>Password</label>
+										<!--<a class="pull-right" href="#">(Lost Password?)</a>-->
+										<label><b>Password</b><span class="error">*</span></label>
 										<input type="password" value="" name="password" class="form-control">
 									</div>
 								</div>
@@ -51,9 +60,9 @@ include 'inc/nav.php' ?>
 							<div class="row">
 								<div class="col-md-6">
 									<span class="remember-box checkbox">
-									<label for="rememberme">
+									<!--<label for="rememberme">
 									<input type="checkbox" id="rememberme" name="rememberme">Remember Me
-									</label>
+									</label>-->
 									</span>
 								</div>
 								<div class="col-md-6">
@@ -71,14 +80,25 @@ include 'inc/nav.php' ?>
 						<?php if(isset($_GET['message'])){ 
 								if($_GET['message'] == 2){
 							?><div class="alert alert-danger" role="alert"> <?php echo "Failed to Register"; ?> </div>
-							<?php } } ?>
+							<?php } 
+							if($_GET['message'] == 3){
+							?><div class="alert alert-danger" role="alert"> <?php echo "Email Address already exists"; ?> </div>
+							<?php } 
+							if($_GET['message'] == 4){
+							?><div class="alert alert-danger" role="alert"> <?php echo "email address should not be empty"; ?> </div>
+							<?php } 
+								if($_GET['message'] == 5){
+							?><div class="alert alert-danger" role="alert"> <?php echo "password doesn't match"; ?> </div>
+							<?php }}?>
 						<!--forms method is set and action is set to redirect towards RegisterProcess.php to check if user exists -->
 						<form class="logregform" method="post" action="RegisterProcess.php">
+						<p><span class="error">* Required field.</span></p>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<label>E-mail Address</label>
-										<input type="text" name="email" value="" class="form-control">
+										<label><b>E-mail Address</b><span class="error">*</span></label>
+										<input type="email" name="email" value="" class="form-control">
+										
 									</div>
 								</div>
 							</div>
@@ -86,11 +106,24 @@ include 'inc/nav.php' ?>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-6">
-										<label>Password</label>
-										<input type="password" name="password" value="" class="form-control">
-									</div>
+										<label><b>First Name</b></label>
+										<input type="text" name="fname" value="" class="form-control">
+                                      </div>
 									<div class="col-md-6">
-										<label>Re-enter Password</label>
+										<label><b>Last Name</b></label>
+										<input type="text" name="lname" value="" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="clearfix space20"></div>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-6">
+										<label><b>Password</b><span class="error">*</span></label>
+										<input type="password" name="password" value="" class="form-control">
+                                      </div>
+									<div class="col-md-6">
+										<label><b>Re-enter Password</b><span class="error">*</span></label>
 										<input type="password" name="passwordagain" value="" class="form-control">
 									</div>
 								</div>
@@ -105,7 +138,6 @@ include 'inc/nav.php' ?>
 					</div>
 				</div>
 			</div>
-
 
 							
 					</div>

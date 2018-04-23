@@ -62,11 +62,46 @@ if(isset($_GET['id']) & !empty($_GET['id'])){
 							<div class="space10"></div>
 							<div class="p-price">$ <?php echo $prodr['price']; ?>.00</div>
 							<p><?php echo $prodr['description']; ?></p>
+<!--Setting the action here to redirect page to addtocart.php-->							
 							<form method="Get" action="addtocart.php">
 							<div class="product-quantity">
-								<span>Quantity:</span> 		
-<!--IMP here we set both quantity and id of product to get reflected in number of items in cart in addtocart.php-->														
+<!--Out of stock displayed initialy on page-->								
+								<?php if(intval($prodr['quantity']) <= 0){
+?>
+						 <div class="alert alert-danger" role="alert"> <?php echo "Out of Stock"; ?> </div>
+
+						 <?php }
+
+								 ?>
+<!--Out of stock exception is handled -->								
+		<?php if(isset($_GET['message'])){
+					if($_GET['message'] == 1){
+						 ?>
+						 <div class="alert alert-danger" role="alert"> <?php echo "Out of Stock"; ?> </div>
+
+						 <?php }
+                    else if ($_GET['message'] == 2) 
+                    {
+                    	?>
+<!--Negative input  exception is handled -->	
+						 <div class="alert alert-danger" role="alert"> <?php echo "Please include valid Input"; ?> </div>
+
+                    <?php }
+                    else if ($_GET['message'] == 3) 
+                    {
+                    	?>
+<!--Quantity greater than availability exception is handled -->	
+						 <div class="alert alert-danger" role="alert"> <?php echo "Only ".$prodr['quantity']." items are available. "; ?> </div>
+
+                    <?php }
+
+
+
+						  }?>		
+<!--IMP here we set both quantity and id of product to get reflected in number of items in cart in addtocart.php-->							
+                                    <span>Quantity:</span> 							
 									<input type="hidden" name="id" value="<?php echo $prodr['id']; ?>">
+									<input type="hidden" name="productquantity" value="<?php echo $prodr['quantity']; ?>">
 									<input type="text" name="quant" placeholder="1">							
 							</div>
 							<div class="shop-btn-wrap">

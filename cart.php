@@ -4,7 +4,19 @@ require_once 'config/connect.php';
 include 'inc/header.php'; 
 include 'inc/nav.php'; 
 //session holds the cart values like Id and their quantity 
-$cart = $_SESSION['cart'];
+if(!empty($_SESSION['cart'])){
+                    	//if it has any elements then only assign it to $cart variable
+					$cart = $_SESSION['cart'];
+					
+				
+				if(empty($cart)){
+					 echo "<script>
+						alert('Cart is empty add items to cart before you view cart');
+						window.location.href='index.php';
+						</script>";
+					//header('location: index.php');
+				}
+			}
 ?>
 
 	
@@ -28,6 +40,7 @@ $cart = $_SESSION['cart'];
 						<th>Price</th>
 						<th>Quantity</th>
 						<th>Total</th>
+						<th>Available quantity</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -64,6 +77,10 @@ $cart = $_SESSION['cart'];
 						<td>
 							<!--Here the amount is calculated by multplying the quantity with the price -->
 							<span class="amount">$<?php echo ($cartr['price']*$value['quantity']); ?>.00</span>					
+						</td>
+						<td>
+							<!--Here the amount is calculated by multplying the quantity with the price -->
+							<span class="amount"><?php echo ($cartr['quantity']); ?></span>					
 						</td>
 					</tr>
 				<?php 
