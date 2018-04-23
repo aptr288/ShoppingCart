@@ -10,6 +10,7 @@ include 'inc/nav.php' ?>
 <style>
 .error {color: #FF0000;}
 </style>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>  
 	
@@ -128,6 +129,8 @@ include 'inc/nav.php' ?>
 									</div>
 								</div>
 							</div>
+							<div class="g-recaptcha" data-sitekey="6LcDEVUUAAAAAOWJ3tT2NWnoPqykxt88vawSHcAM"></div>
+											<div class="wrapper">
 							<div class="row">
 								<div class="col-md-12">
 									<div class="space20"></div>
