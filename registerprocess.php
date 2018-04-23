@@ -81,7 +81,7 @@ if($count==0){
         }
         else
         {
-            header("location: edit-address.php");
+            header("location: index.php");
         }
    
   }
